@@ -63,7 +63,7 @@ static void __cdecl KERNEL32_DLL_OutputDebugStringA_hook(void * v)
     // void * v is a pe_vars_t *, a huge structure containing all 
     // the information for given emulation session. We don't have
     // the full structure definition, so we just treat it as a void *
-    printf("[+] OutputDebugStringA(pe_vars_t * v = 0x%p)\n", v);
+    //printf("[+] OutputDebugStringA(pe_vars_t * v = 0x%p)\n", v);
 
     // use Defender's internal Parameters<1>::Parameters<1> function 
     // to retrieve the one parameter passed to kernel32!OutputDebugStringA
@@ -72,11 +72,12 @@ static void __cdecl KERNEL32_DLL_OutputDebugStringA_hook(void * v)
     Parameters1(Params, v);
 
     // print out the virtual address of the char * argument
-    printf("[+] Params[1]:\t0x%llx\n", Params[0]);
+    //printf("[+] Params[1]:\t0x%llx\n", Params[0]);
 
     // use Defender's internal pe_read_string_ex function to translate a 
     // virtual address to a real address we can interact with
     str = GetString(v, Params[0], &len);
+    if (str[len - 1] == '\n') str[len - 1] = 0;
 
     // now that we finally have a real pointer we can interact with, print
     // the string out to stdout

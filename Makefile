@@ -5,7 +5,7 @@ LDLIBS  = intercept/libdisasm.a -Wl,--whole-archive,peloader/libpeloader.a,--no-
 
 .PHONY: clean peloader intercept
 
-TARGETS=mpclient mpscript intercept
+TARGETS=mpclient mpscript
 
 all: $(TARGETS)
 	-mkdir -p faketemp
